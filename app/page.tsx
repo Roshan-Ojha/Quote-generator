@@ -1,7 +1,50 @@
+"use client"
 import Link from "next/link";
-// import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 export default function Home() {
-  // const router = useRouter();
+
+  const [quote,setquote] = useState({});
+
+  useEffect(()=>{
+
+    
+      const abortController = new AbortController();
+  
+
+  const fetchData = async () => {
+    try {
+      const res = await fetch("http://127.0.0.1:4000", {
+        signal: abortController.signal,
+      });
+      const data = await res.json();
+      setquote(data);
+    } catch (error) {
+      // ℹ️: The error name is "CanceledError" for Axios.
+      if (error !== "AbortError") {
+        /* Logic for non-aborted error handling goes here. */
+      
+      }
+    }
+  };
+
+  fetchData();
+
+  /* 
+    Abort the request as it isn't needed anymore, the component being 
+    unmounted. It helps avoid, among other things, the well-known "can't
+    perform a React state update on an unmounted component" warning.
+  */
+  return () => abortController.abort();
+      
+  },[])
+
+  const NewQuote = async()=>{
+    
+    const response= await fetch("http://127.0.0.1:4000");
+    const newQuote = await response.json();
+    setquote(newQuote)
+
+  }
 
   return (
     <div className="flex flex-col h-screen w-screen">
@@ -21,13 +64,14 @@ export default function Home() {
           Quote of the Day
         </div>
         <div className="text-[#414044] font-poppins text-[47px] flex flex-col justify-center items-center content-center self-center max-[393px]:text-[20px] mt-[50px] leading-[80px] max-[393px]:mt-[20px] max-[393px]:leading-[35px]">
-          Never give up because you never know if the next try is going to be
-          the one that works .
+          {quote.quote}
         </div>
         <div className="text-[39px] text-[#58565a] flex self-end mr-[10px] max-[393px]:text-[15px] mt-[25px]">
-          Roshan Ojha
+          {quote.author}
         </div>
-        <button className="self-end mt-[50px] h-[111px] w-[313px] bg-[#4e6cdb] font-poppins rounded-[23px] text-[33px] font-[700] text-[#cfe0e4] hover:bg-[#cfe0e4] hover:text-[#4e6cdb] hover:border-[1px] hover:border-[#4e6cdb] max-[393px]:h-[55px] max-[393px]:w-[156px] max-[393px]:text-[20px] max-[393px]:font-[500] max-[393px]:mt-[30px]">
+        <button className="self-end mt-[50px] h-[111px] w-[313px] bg-[#4e6cdb] font-poppins rounded-[23px] text-[33px] font-[700] text-[#cfe0e4] hover:bg-[#cfe0e4] hover:text-[#4e6cdb] hover:border-[1px] hover:border-[#4e6cdb] max-[393px]:h-[55px] max-[393px]:w-[156px] max-[393px]:text-[20px] max-[393px]:font-[500] max-[393px]:mt-[30px]"
+        onClick={NewQuote}
+        >
           New Quote
         </button>
       </div>
