@@ -1,8 +1,10 @@
-import Image from "next/image";
-
+import Link from "next/link";
+// import { useRouter } from "next/navigation";
 export default function Home() {
+  // const router = useRouter();
+
   return (
-    <div className="flex flex-col h-screen w-screen" >
+    <div className="flex flex-col h-screen w-screen">
       <div className="flex flex-row   justify-between items-center ">
         <div className="text-[30px] font-[700] p-[50px] font-poppins max-[393px]:text-[20px] ">
           <span>Quote</span>
@@ -10,7 +12,7 @@ export default function Home() {
           <span>Oasis</span>
         </div>
         <button className="mr-[50px] h-[62px] w-[142px] bg-[#4e6cdb] font-poppins rounded-[23px] text-[18px] text-[#cfe0e4] hover:bg-[#cfe0e4] hover:text-[#4e6cdb] hover:border-[1px] hover:border-[#4e6cdb]  max-[393px]:h-[31px] max-[393px]:w-[71px]  max-[393px]:text-[12px]">
-          Register
+          <Link href="/register">Register</Link>
         </button>
       </div>
 
