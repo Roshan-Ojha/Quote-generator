@@ -1,5 +1,6 @@
 const express = require('express')
 const schedule = require('node-schedule');
+const dotenv = require('dotenv').config()
 
 const registerRouter = require('./Routes/register.rout')
 const verifyoutRouter = require('./Routes/otp.route')
@@ -8,6 +9,8 @@ const quoteRouter = require('./Routes/storequotes.route')
 const retrieve = require ('./Controller/RetriveQuote.controller')
 
 const send = require('./Miscellaneous/sendQuotes')
+
+const PORT = process.env.PORT
 
 const app = express()
 
@@ -29,6 +32,6 @@ app.use('/store',quoteRouter)
 
 
 
-app.listen(3000,()=>{
-    console.log("Listening on port 3000")
+app.listen(PORT,()=>{
+    console.log(`Listening on port ${PORT}`)
 })
